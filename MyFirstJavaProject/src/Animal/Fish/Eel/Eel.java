@@ -5,12 +5,12 @@ public class Eel extends Fish {
 
     // Parameterized Constructor
     public Eel() {
+        setFeatures("Release electric charge");
     }
 
     // Parameterized Constructor
     public Eel(int height, int weight, String animalType, String bloodType, String habitat, String features) {
         super(height, weight, animalType, bloodType, habitat, features);
-        setFeatures("Release electric charge");
     }
 
     public void ShowInfo() {

@@ -8,6 +8,10 @@ public class Animal {
 
     // Default Constructor
     public Animal() {
+        this.Height = 0;
+        this.Weight = 0;
+        this.AnimalType = "AnimalType";
+        this.BloodType = "BloodType";
     }
 
     // Parameterized Constructor

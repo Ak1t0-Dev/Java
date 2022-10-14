@@ -10,15 +10,15 @@ public class Reptile extends Animal {
 
     // Default Constructor
     public Reptile() {
+        this.skinType = "Dry Skin";
+        this.bone = "Backbone";
+        this.eggType = "Soft-shelted egg";
     }
 
     // Parameterized Constructor
     public Reptile(int height, int weight, String animalType, String bloodType, String skinType, String bone,
             String eggType) {
         super(height, weight, animalType, bloodType);
-        this.skinType = "Dry Skin";
-        this.bone = "Backbone";
-        this.eggType = "Soft-shelted egg";
     }
 
     public String getSkinType() {

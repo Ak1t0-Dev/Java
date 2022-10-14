@@ -8,13 +8,13 @@ public class Birds extends Animal {
 
     // Default Constructor
     public Birds() {
+        this.features = "Animal with feathers";
+        this.ability = "Can fly";
     }
 
     // Parameterized Constructor
     public Birds(int height, int weight, String animalType, String bloodType, String features, String ability) {
         super(height, weight, animalType, bloodType);
-        this.features = "Animal with feathers";
-        this.ability = "Can fly";
     }
 
     public String getFeatures() {

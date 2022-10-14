@@ -6,13 +6,13 @@ public class Crocodile extends Reptile {
 
     // Default Constructor
     public Crocodile() {
+        this.setEggType("Hard-shelled eggs");
     }
 
     // Parameterized Constructor
     public Crocodile(int height, int weight, String animalType, String bloodType, String skinType, String bone,
             String eggType) {
         super(height, weight, animalType, bloodType, skinType, bone, eggType);
-        setEggType("Hard-shelled eggs");
     }
 
  

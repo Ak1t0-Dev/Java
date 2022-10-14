@@ -7,13 +7,13 @@ public class Fish extends Animal {
 
     // Default Constructor
     public Fish() {
+        this.habitat = "Live in water";
+        this.features = "Has gills";
     }
 
     // Parameterized Constructor
     public Fish(int height, int weight, String animalType, String bloodType, String habitat, String features) {
         super(height, weight, animalType, bloodType);
-        this.habitat = "Live in water";
-        this.features = "Has gills";
     }
 
     public String getHabitat() {
