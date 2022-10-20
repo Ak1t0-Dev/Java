@@ -5,10 +5,12 @@ public class Calculator {
 
     public static void main(String[] args) {
 
-        final String DECISION_YES = "YES";
-        final String DECISION_NO = "NO";
+        final String DECISION_YES = "yes";
+        final String DECISION_NO = "no";
+        final String DECISION_Y = "y";
+        final String DECISION_N = "n";
         int userChoice = 0;
-        String userDecision = "YES";
+        String userDecision = DECISION_YES;
         int number1 = 1;
         int number2 = 1;
         int output = 0;
@@ -42,20 +44,21 @@ public class Calculator {
 
                 System.out.println("Your final output is : " + output);
 
-                while (DECISION_YES.equals(userDecision)) {
+                while (DECISION_YES.equals(userDecision) || DECISION_Y.equals(userDecision)) {
                     System.out.println("Do you want to use calculator again ?(YES/NO)");
                     userDecision = sc.next(); // Waiting for a user to enter the input
-                    if (DECISION_NO.equals(userDecision)) {
+                    userDecision = userDecision.toLowerCase();
+                    if (DECISION_NO.equals(userDecision) || DECISION_N.equals(userDecision)) {
                         break;
-                    } else if (DECISION_YES.equals(userDecision)) {
+                    } else if (DECISION_YES.equals(userDecision) || DECISION_Y.equals(userDecision)) {
                         break;
                     } else {
-                        System.out.println("Please Enter Yes or No.");
+                        System.out.println("Please Enter yes or no.");
                         userDecision = DECISION_YES;
                     }
                 }
 
-            } while (DECISION_YES.equals(userDecision));
+            } while (DECISION_YES.equals(userDecision) || DECISION_Y.equals(userDecision));
 
         } catch (InputMismatchException e) {
             System.out.println("Please enter a number which is valid meaning integer");
