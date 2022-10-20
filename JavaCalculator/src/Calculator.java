@@ -17,7 +17,7 @@ public class Calculator {
         Scanner sc = new Scanner(System.in);
 
         try {
-            do {
+            while (DECISION_YES.equals(userDecision) || DECISION_Y.equals(userDecision)) {
                 System.out.println("==============================");
                 System.out.println("Type 1 : For Adding");
                 System.out.println("Type 2 : For Subtraction");
@@ -58,7 +58,7 @@ public class Calculator {
                     }
                 }
 
-            } while (DECISION_YES.equals(userDecision) || DECISION_Y.equals(userDecision));
+            }
 
         } catch (InputMismatchException e) {
             System.out.println("Please enter a number which is valid meaning integer");
