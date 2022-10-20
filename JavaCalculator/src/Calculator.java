@@ -45,7 +45,7 @@ public class Calculator {
                 System.out.println("Your final output is : " + output);
 
                 while (DECISION_YES.equals(userDecision) || DECISION_Y.equals(userDecision)) {
-                    System.out.println("Do you want to use calculator again ?(YES/NO)");
+                    System.out.println("Do you want to use calculator again ?(yes/no)");
                     userDecision = sc.next(); // Waiting for a user to enter the input
                     userDecision = userDecision.toLowerCase();
                     if (DECISION_NO.equals(userDecision) || DECISION_N.equals(userDecision)) {
