@@ -20,7 +20,7 @@ public class ArrayListQuestionTwo {
 
         // giving all numbers from the list to the new list
         listCopy.addAll(list);
-        listCopy.set(9, listCopy.get(9) - 5);
+        listCopy.set(listCopy.size() - 1, listCopy.get(listCopy.size() - 1) - 5);
         System.out.println("the 1st Array: " + list);
         System.out.println("the 2nd Array: " + listCopy);
 
