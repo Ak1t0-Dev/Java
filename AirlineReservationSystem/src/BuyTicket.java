@@ -25,7 +25,6 @@ public class BuyTicket {
 
     public void buyingTicket(List<String> userInformation, List<String[]> userFlightInfo) {
         try {
-
             Scanner sc = new Scanner(System.in);
             // For Calendar
             Calendar calendar = Calendar.getInstance();

@@ -73,7 +73,3 @@ cancel the seat
 
 7. exit
 exit from system
-
-
-life.4.ism@icloud.com
-asdfghjkl

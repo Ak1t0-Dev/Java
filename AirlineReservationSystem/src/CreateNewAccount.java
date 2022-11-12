@@ -1,11 +1,6 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class CreateNewAccount {
 
@@ -15,17 +10,20 @@ public class CreateNewAccount {
     private static String passWord;
     private static String passportNumber;
     private static String bornDate;
-    private static String confirmAccount;
-    private static String confirmAccountLowerCase;
+    private static String registerAccount;
 
     public static void createNewAccount() {
         int flag = 0;
-        int flagInner = 0;
-        while (flag == 0) {
-            try {
-                Scanner sc = new Scanner(System.in);
-                List<String> userAccount = new ArrayList<>();
+        int flagInner;
+        Scanner sc = new Scanner(System.in);
+        List<String> userAccount = new ArrayList<>();
 
+        try {
+            while (flag == 0) {
+                // initialized
+                flagInner = 0;
+
+                // user's first name
                 while (flagInner == 0) {
                     System.out.println("Enter your first name(1-20): ");
                     firstName = sc.next();
@@ -33,12 +31,13 @@ public class CreateNewAccount {
                     if (firstName.length() > 0 && firstName.length() <= 20) {
                         flagInner = 1;
                     } else {
-                        System.out.println("first name has 20 character limit");
+                        System.out.println("first name has 20 characters limit");
                     }
                 }
 
                 flagInner = 0;
 
+                // user's last name
                 while (flagInner == 0) {
                     System.out.println("Enter your last name(1-20): ");
                     lastName = sc.next();
@@ -46,12 +45,13 @@ public class CreateNewAccount {
                     if (lastName.length() > 0 && lastName.length() <= 20) {
                         flagInner = 1;
                     } else {
-                        System.out.println("last name has 20 character limit");
+                        System.out.println("last name has 20 characters limit");
                     }
                 }
 
                 flagInner = 0;
 
+                // user's born date
                 while (flagInner == 0) {
                     System.out.println("Enter your born date(yyyymmdd)");
                     bornDate = sc.next();
@@ -59,7 +59,7 @@ public class CreateNewAccount {
                     if (bornDate.length() != 8) {
                         System.out.println("Born date should be 8 limit");
                     } else {
-                        String check = bornDateCheck(bornDate);
+                        String check = UserInputCheck.bornDateCheck(bornDate);
                         if (check == "") {
                             System.out.println("Born date is invalid");
                         } else {
@@ -70,10 +70,11 @@ public class CreateNewAccount {
 
                 flagInner = 0;
 
+                // user's email address
                 while (flagInner == 0) {
                     System.out.println("Enter your email address: ");
                     emailAddress = sc.next();
-                    boolean check = emailAddressCheck(emailAddress);
+                    boolean check = UserInputCheck.emailAddressCheck(emailAddress);
                     if (check) {
                         flagInner = 1;
                     } else {
@@ -83,6 +84,7 @@ public class CreateNewAccount {
 
                 flagInner = 0;
 
+                // user's passport number
                 while (flagInner == 0) {
                     System.out.println("Enter your new passportNumber(9): ");
                     passportNumber = sc.next();
@@ -95,18 +97,23 @@ public class CreateNewAccount {
 
                 flagInner = 0;
 
+                // user's password
                 while (flagInner == 0) {
                     System.out.println("Enter your new password(8 - 20): ");
+                    System.out.println("(including upperletter, lowerletter, number and symbol)");
                     passWord = sc.next();
-                    if (passWord.length() >= 8 && passWord.length() <= 20) {
+                    boolean check = UserInputCheck.passwordCheck(passWord);
+                    if (check) {
                         flagInner = 1;
                     } else {
                         System.out.println("password length should be between 8 and 20");
+                        System.out.println("password should be include upperletter, lowerletter, number and symbol");
                     }
                 }
 
                 flagInner = 0;
 
+                // show user's input
                 System.out.println("====================================");
                 System.out.println("first name: " + firstName);
                 System.out.println("last name: " + lastName);
@@ -115,62 +122,50 @@ public class CreateNewAccount {
                 System.out.println("passport number: " + passportNumber);
                 System.out.println("password: " + passWord);
                 System.out.println("====================================");
-                while (flagInner == 0) {
-                    System.out.println("Register your account?(yes/no)");
 
-                    confirmAccount = sc.next();
-                    confirmAccountLowerCase = confirmAccount.toLowerCase();
+                while (flagInner == 0) {
+                    System.out.println("Do you want to create your account based on these information?");
+                    System.out.println("1: Yes");
+                    System.out.println("2: No (reenter the information)");
+                    System.out.println("3: Exit");
+                    registerAccount = sc.next();
 
                     // if confirmAccount is yes
-                    if (confirmAccountLowerCase.equals(ConstData.DECSION_YES)
-                            || confirmAccountLowerCase.equals(ConstData.DECSION_Y)) {
-                        userAccount.add(firstName);
-                        userAccount.add(lastName);
-                        userAccount.add(bornDate);
-                        userAccount.add(emailAddress);
-                        userAccount.add(passportNumber);
-                        userAccount.add(passWord);
-                        RegisterAccount.regsiterAccount(userAccount);
-                        flagInner = 1;
-                        flag = 1;
+                    switch (registerAccount) {
+                        // create an user account
+                        case "1":
+                            userAccount.add(firstName);
+                            userAccount.add(lastName);
+                            userAccount.add(bornDate);
+                            userAccount.add(emailAddress);
+                            userAccount.add(passportNumber);
+                            userAccount.add(passWord);
+                            RegisterAccount.regsiterAccount(userAccount); // 修正要
+                            flagInner = 1;
+                            flag = 1;
+                            break;
 
-                    } else if (confirmAccountLowerCase.equals(ConstData.DECSION_NO)
-                            || confirmAccountLowerCase.equals(ConstData.DECSION_N)) {
-                        return;
-                    } else {
-                        System.out.println("Enter yes or no");
+                        // reenter user information
+                        case "2":
+                            flagInner = 1;
+                            break;
+
+                        // exit
+                        case "3":
+                            flagInner = 1;
+                            flag = 1;
+                            break; // 修正要
+
+                        default:
+                            System.out.println("Please Enter the valid number");
+                            break;
+
                     }
                 }
-
-            } catch (InputMismatchException e) {
-                System.out.println("Input is invalid");
-                flagInner = 0;
-
-            } catch (Exception e) {
-                System.out.println("Sorry, something is wrong");
-                flag = 1;
-
             }
+        } catch (Exception e) {
+            System.out.println("Sorry, something is wrong");
+            e.printStackTrace();
         }
-    }
-
-    public static String bornDateCheck(String bornDate) {
-        try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
-            String bornDateChecked = dtf.format(LocalDate.parse(bornDate, dtf));
-            return bornDateChecked;
-        } catch (DateTimeParseException dtp) {
-            return "";
-        }
-    }
-
-    public static boolean emailAddressCheck(String value) {
-        boolean result = false;
-        if (value != null) {
-            Pattern pattern = Pattern.compile(
-                    "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
-            result = pattern.matcher(value).matches();
-        }
-        return result;
     }
 }

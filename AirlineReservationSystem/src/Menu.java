@@ -31,7 +31,6 @@ public class Menu {
                     case 2:
                         // 2. creat a new account
                         CreateNewAccount.createNewAccount();
-                        UserLogin.userLogin();
                         flag = 1;
                         break;
                     case 3:

@@ -1,9 +1,13 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ManipulateCsv {
@@ -95,6 +99,59 @@ public class ManipulateCsv {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("writing to csv is failed");
+        }
+    }
+
+    public static void readLoginUser(String userEmail, String userPassword) {
+
+        try {
+            Path pathUserAccountFile = Paths.get(ConstData.userAccountFile);
+            List<String> linesCsvuserAccount = Files.readAllLines(pathUserAccountFile);
+            List<String[]> allUserInfo = new ArrayList<>();
+            List<String> userInfo = new ArrayList<>();
+
+            for (int i = 0; i < linesCsvuserAccount.size(); i++) {
+                String[] array = linesCsvuserAccount.get(i).split(",");
+                allUserInfo.add(array);
+            }
+
+            // Encrypt password
+            String hashedPassword = Encrypt.userInfoEncrypt(userPassword);
+            if (hashedPassword == "") {
+                System.out.println("Encrypt is failed");
+                return;
+            }
+
+            // Encrypt hashed password and email
+            String hashUserAccountPart = Encrypt.userInfoEncrypt(userEmail + hashedPassword);
+            if (hashUserAccountPart == "") {
+                System.out.println("Encrypt is failed");
+                return;
+            }
+
+            // find user information from csv
+            for (int i = 0; i < allUserInfo.size(); i++) {
+                if (allUserInfo.get(i)[6].equals(hashUserAccountPart)) {
+                    userInfo = Arrays.asList(allUserInfo.get(i));
+                    break;
+                }
+            }
+
+            // get user flight information
+            Path pathUserFlightInfo = Paths.get(ConstData.userPath + userInfo.get(7) + ".csv");
+            List<String> linesCsvFlightInfo = Files.readAllLines(pathUserFlightInfo, Charset.forName(ConstData.UTF_8));
+            List<String[]> flightInfo = new ArrayList<>();
+
+            for (int i = 0; i < linesCsvFlightInfo.size(); i++) {
+                String[] array = linesCsvFlightInfo.get(i).split(",");
+                flightInfo.add(array);
+            }
+
+            UserLoginMenu.userLoginMenu(userInfo, flightInfo);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("writing is failed");
         }
     }
 
