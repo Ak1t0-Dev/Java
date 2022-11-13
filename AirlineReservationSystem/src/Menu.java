@@ -1,8 +1,9 @@
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
-    public static void showMenu() {
+    public static void showMenu() throws IOException {
         int flag = 0;
         while (flag == 0) {
             Scanner sc = new Scanner(System.in);

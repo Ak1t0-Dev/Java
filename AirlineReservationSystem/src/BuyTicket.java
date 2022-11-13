@@ -1,4 +1,3 @@
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,6 +16,7 @@ import java.util.stream.Stream;
 public class BuyTicket {
     // ask domestic/international flight
     int userDecision = 0;
+    int flag = 0;
     String userDecisionDate = "";
     String today = "";
     String todayAdded = "";
@@ -31,14 +31,14 @@ public class BuyTicket {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
             // FlightData
             Path pathCsvFlight = Paths.get(ConstData.PATH_CSV_FLIGHT);
-            List<String> linesCsvFlight = Files.readAllLines(pathCsvFlight, Charset.forName(ConstData.UTF_8));
+            List<String> linesCsvFlight = Files.readAllLines(pathCsvFlight);
             List<FlightInformation> flightList = new ArrayList<FlightInformation>();
             // CountryData
             Path pathCsvCountry = Paths.get(ConstData.PATH_CSV_COUNTRY);
-            List<String> linesCsvCountry = Files.readAllLines(pathCsvCountry, Charset.forName(ConstData.UTF_8));
+            List<String> linesCsvCountry = Files.readAllLines(pathCsvCountry);
             // CityData
             Path pathCsvCity = Paths.get(ConstData.PATH_CSV_CITY);
-            List<String> linesCsvCity = Files.readAllLines(pathCsvCity, Charset.forName(ConstData.UTF_8));
+            List<String> linesCsvCity = Files.readAllLines(pathCsvCity);
             List<CityData> cityList = new ArrayList<CityData>();
 
             // List表示用
@@ -190,25 +190,29 @@ public class BuyTicket {
             }
 
             // Choose the date
-            System.out.println("");
-            System.out.println("Select the date between: ");
-            today = sdf.format(calendar.getTime());
-            calendar.add(Calendar.MONTH, 3);
-            todayAdded = sdf.format(calendar.getTime());
-            yyyyMmDd = today.substring(0, 8);
-            yyyyMmDdAdded = todayAdded.substring(0, 8);
-            System.out.println(yyyyMmDd +" - " + yyyyMmDdAdded);
-            userDecisionDate = sc.next();
+            while (flag == 0) {
+                System.out.println("Select the date between: ");
+                today = sdf.format(calendar.getTime());
+                calendar.add(Calendar.MONTH, 3);
+                todayAdded = sdf.format(calendar.getTime());
+                yyyyMmDd = today.substring(0, 8);
+                yyyyMmDdAdded = todayAdded.substring(0, 8);
+                System.out.println(yyyyMmDd + " - " + yyyyMmDdAdded);
+                userDecisionDate = sc.next();
+                String userDate = DateCheck(userDecisionDate);
+                // DateTimeParseException condition
+                if (userDate == "") {
+                    System.out.println("The entered date is invalid.");
+                }
+                else if (yyyyMmDd.compareTo(userDate) > 0 && yyyyMmDdAdded.compareTo(userDate) < 0) {
+                    System.out.println("The entered date should be between: " + yyyyMmDd + " - " + yyyyMmDdAdded);
+                } else {
+                    userDecisionList.add(userDate);
+                    flag = 1;
+                }
 
-            String userDate = DateCheck(userDecisionDate);
-
-            if (yyyyMmDd.compareTo(userDate) <= 0 && yyyyMmDdAdded.compareTo(userDate) >= 0) {
-                System.out.println("Lets see: " + userDate);
             }
-            
-            // calender add 修正
-            userDecisionList.add(userDate);
-            ReadFlightSeatData.readFlightSeatData(userDecisionList,userInformation,userFlightInfo);
+            ReadFlightSeatData.readFlightSeatData(userDecisionList, userInformation, userFlightInfo);
 
         } catch (Exception e) {
             System.out.println("error");
@@ -222,9 +226,8 @@ public class BuyTicket {
             String userDate = dtf.format(LocalDate.parse(date, dtf)); // ←LocalDate.parseでDateTimeParseExceptionがThrowされる
             return userDate;
 
-            // ■ 問題点
-        } catch (DateTimeParseException dtp) {
-            return "You must enter the valid date: ";
+        } catch (DateTimeParseException e) {
+            return "";
         }
     }
 
