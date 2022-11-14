@@ -1,10 +1,11 @@
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserLogin {
 
-    public static void userLogin() throws IOException {
+    public static void userLogin() throws IOException, NoSuchAlgorithmException {
         Scanner sc = new Scanner(System.in);
         String userEmail = "";
         String userPassword = "0";

@@ -1,9 +1,10 @@
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
-    public static void showMenu() throws IOException {
+    public static void showMenu() throws IOException, NoSuchAlgorithmException {
         int flag = 0;
         while (flag == 0) {
             Scanner sc = new Scanner(System.in);

@@ -1,10 +1,11 @@
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserLoginMenu {
 
-    public static void userLoginMenu(List<String> userInformation, List<String[]> userFlightInfo) {
+    public static void userLoginMenu(List<String> userInformation, List<String[]> userFlightInfo) throws IOException {
 
         Scanner sc = new Scanner(System.in);
         int userDecsion = 0;

@@ -20,7 +20,7 @@ public class ManipulateCsv {
     }
 
     public static void createUserCsv(List<String> account) throws IOException {
-        Path originalFile = Paths.get("src/csv/userAccountData/user/userSample/userSample.csv");
+        Path originalFile = Paths.get(ConstData.PATH_CSV_USER_SAMPLE);
         Path targetFile = Paths.get(ConstData.USER_PATH + account.get(6) + ".csv");
         Files.copy(originalFile, targetFile);
     }
@@ -115,7 +115,6 @@ public class ManipulateCsv {
 
     }
 
-    
     public static void createflightdata() throws IOException {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -129,7 +128,7 @@ public class ManipulateCsv {
         // add three month
         calendar.add(Calendar.MONTH, 3);
 
-        List<String> linesCsvpathAirlineData = ManipulateCsv.readAllLineCsv(ConstData.AIRLINEDATA_PATH);
+        List<String> linesCsvpathAirlineData = ManipulateCsv.readAllLineCsv(ConstData.PATH_CSV_AIRLINEDATA);
 
         for (int i = 0; i < 100; i++) {
             calendar.add(Calendar.DAY_OF_MONTH, -1);

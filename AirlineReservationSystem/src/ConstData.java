@@ -8,13 +8,19 @@ public class ConstData {
     public static final String USER_ACCOUNT_PATH = "src/csv/userAccountData/";
     public static final String USER_ACCOUNT_FILE = USER_ACCOUNT_PATH + "userAccount.csv";
     public static final String USER_PATH = USER_ACCOUNT_PATH + "user/";
+    public static final String PATH_CSV_USER_SAMPLE = "src/csv/userAccountData/user/userSample/userSample.csv";
     // line, comma
     public static final String LINE_FEED_CODE = "\r\n";
     public static final String DELIMITER_COMMA = ",";
     // flight type
-    public static final int FLIGHT_DOMESTIC = 1;
-    public static final int FLIGHT_INTERNATIONAL = 2;
+    public static final String FLIGHT_DOMESTIC = "dometic flight";
+    public static final String FLIGHT_INTERNATIONAL = "international flight";
     // flight data
-    public static final int SEATS = 140;
+    public static final int SEATS_ROW = 20;
+    public static final int SEATS_COLUMN = 7;
+    public static final int SEATS = SEATS_ROW * SEATS_COLUMN;
     public static final int HOURS = 24;
+    public static final int PADDING_NUMBER = 4;
+    public static final String VACANT = "○";
+    public static final String OCCUPIED = "×";
 }

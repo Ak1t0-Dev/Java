@@ -38,4 +38,13 @@ public class UserInputCheck {
         }
         return result;
     }
+
+    // check if it can change a value to Integer
+    public static int changeStringtoInt(String userInput) {
+        try {
+            return Integer.parseInt(userInput);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
 }
