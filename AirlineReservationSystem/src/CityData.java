@@ -20,6 +20,5 @@ public class CityData {
     public void setCityName(String cityName) {
         this.cityName = cityName;
     }
-
-
+    
 }

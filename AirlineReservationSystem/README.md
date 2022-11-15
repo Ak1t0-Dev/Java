@@ -1,18 +1,59 @@
-## Getting Started
+# System features
+An airline reservation system using Csv data
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Explantion of this system:
+When you boost this system, it will create three months flight data csv.
+If users create an account then it will make users data csv.
 
-## Folder Structure
+0. Menu
+    - login
+      - buy a ticket
+      - cancel the flight
+      - show account information
+      - exit
+    - creat a new account
+    - exit
 
-The workspace contains two folders by default, where:
+1. create an account
+    firstname:20 digit limited
+    lastname:20 digit limited
+    born of date: yyyyMMdd
+    email address:20 digit including @ 
+    password:8 - 20 digit you need least a upperletter, lowerletter, number, and     symbol (password should be encrypted)
+    passport number: 9 digit
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+2. login
+    ask emailaddress and password to login
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+3. buying a ticket(reservation)
+    ask domestic/international flight
+    ask departure and arrival
+    ask date (between current date to after three months date)
+    show boarding times(per hours)
+    show all seats (occupied/vacant)
+    ask to confirm
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+4. airlines
+    domestic/international flight
 
-## Dependency Management
+    ex)
+    domestic flight
+    Japan - Tokyo - Japan - Osaka
+                          - Hokaido
+          - Osaka - Japan - Tokyo
+                          - Hokaido
+          - Hokaido -
+       
+    international flight
+    Japan - Tokyo - Canada - Vancouver
+                           - Calgary
+                           - Toronto
+                  - US     - NewYork
+                           - Boston
+                           - LosAngeles
+    
+5. cancel
+    cancel the seat
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+6. exit
+    exit from system

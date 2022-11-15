@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,13 +14,12 @@ public class CreateNewAccount {
     private static String bornDate;
     private static String registerAccount;
 
-    public static void createNewAccount() {
+    public static void createNewAccount() throws IOException, NoSuchAlgorithmException {
         int flag = 0;
         int flagInner;
         Scanner sc = new Scanner(System.in);
         List<String> userAccount = new ArrayList<>();
 
-        try {
             while (flag == 0) {
                 // initialized
                 flagInner = 0;
@@ -59,7 +60,7 @@ public class CreateNewAccount {
                     if (bornDate.length() != 8) {
                         System.out.println("Born date should be 8 limit");
                     } else {
-                        String check = UserInputCheck.bornDateCheck(bornDate);
+                        String check = UserInputCheck.dateCheck(bornDate);
                         if (check == "") {
                             System.out.println("Born date is invalid");
                         } else {
@@ -140,7 +141,7 @@ public class CreateNewAccount {
                             userAccount.add(emailAddress);
                             userAccount.add(passportNumber);
                             userAccount.add(passWord);
-                            RegisterAccount.regsiterAccount(userAccount); // 修正要
+                            RegisterAccount.regsiterAccount(userAccount);
                             flagInner = 1;
                             flag = 1;
                             break;
@@ -154,7 +155,7 @@ public class CreateNewAccount {
                         case "3":
                             flagInner = 1;
                             flag = 1;
-                            break; // 修正要
+                            break;
 
                         default:
                             System.out.println("Please Enter the valid number");
@@ -163,9 +164,5 @@ public class CreateNewAccount {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Sorry, something is wrong");
-            e.printStackTrace();
-        }
     }
 }

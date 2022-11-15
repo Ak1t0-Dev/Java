@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class UserInputCheck {
 
     // check if the date is existed (yyyymmdd)
-    public static String bornDateCheck(String bornDate) {
+    public static String dateCheck(String bornDate) {
         try {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
             String bornDateChecked = dtf.format(LocalDate.parse(bornDate, dtf));

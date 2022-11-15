@@ -14,14 +14,14 @@ public class UserLogin {
         while (flag == 0) {
             // show menu
             System.out.println();
-            System.out.println("******************************");
+            System.out.println(ConstData.BORDER_LINE_STAR);
             System.out.println("Welcome to CICCC Airlines.");
-            System.out.println("******************************");
+            System.out.println(ConstData.BORDER_LINE_STAR);
             System.out.println();
 
             while (flagInner == 0) {
-                System.out.println("-----------------------------");
-                System.out.println("1: Enter your Email Address");
+                System.out.println(ConstData.BORDER_LINE);
+                System.out.println("1: Enter your email Address");
                 userEmail = sc.next();
                 Boolean check = UserInputCheck.emailAddressCheck(userEmail);
                 if (check) {
@@ -31,12 +31,19 @@ public class UserLogin {
                 }
             }
 
+            flagInner = 0;
+
             System.out.println("2. Enter your password");
             userPassword = sc.next();
-            List<String> userInfo = ManipulateCsv.readLoginUser(userEmail, userPassword); 
-            List<String[]> flightInfo = ManipulateCsv.readUserFlightInfo(userInfo);
+            List<String> userInfo = ManipulateCsv.readLoginUser(userEmail, userPassword);
 
-            UserLoginMenu.userLoginMenu(userInfo, flightInfo);
+            if (userInfo.size() == 0) {
+                System.out.println("email address or password is wrong.");
+            } else {
+                List<String[]> flightInfo = ManipulateCsv.readUserFlightInfo(userInfo);
+                UserLoginMenu.userLoginMenu(userInfo, flightInfo);
+                flag = 1;
+            }
 
         }
     }

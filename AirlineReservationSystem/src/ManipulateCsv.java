@@ -13,10 +13,19 @@ import java.util.List;
 
 public class ManipulateCsv {
 
-    public static List<String> readAllLineCsv(String path) throws IOException {
+    public static List<String> readAllLinesCsv(String path) throws IOException {
         Path pathCsv = Paths.get(path);
         List<String> linesCsv = Files.readAllLines(pathCsv);
         return linesCsv;
+    }
+
+    public static List<String[]> splitAllLines(List<String> linesCsv) {
+        List<String[]> allLines = new ArrayList<>();
+        for (int i = 0; i < linesCsv.size(); i++) {
+            String[] line = linesCsv.get(i).split(",");
+            allLines.add(line);
+        }
+        return allLines;
     }
 
     public static void createUserCsv(List<String> account) throws IOException {
@@ -39,7 +48,6 @@ public class ManipulateCsv {
     }
 
     public static void writeUserFlightCsv(String userHash, List<String[]> userFlightInfo) throws IOException {
-
         String userCsvFile = ConstData.USER_PATH + userHash + ".csv";
         BufferedWriter bw = new BufferedWriter(new FileWriter(userCsvFile, true));
 
@@ -56,13 +64,30 @@ public class ManipulateCsv {
 
     }
 
-    public static void writeFlightSeatCsv(String flightSeatCsv, List<String[]> nodes) throws IOException {
+    public static void deleteUserFlightCsv(String userHash, List<String[]> userFlightInfo) throws IOException {
+        String userCsvFile = ConstData.USER_PATH + userHash + ".csv";
+        BufferedWriter bw = new BufferedWriter(new FileWriter(userCsvFile));
+
+        for (int i = 0; i < userFlightInfo.size(); i++) {
+            for (int j = 0; j < userFlightInfo.get(i).length; j++) {
+                bw.write(userFlightInfo.get(i)[j]);
+                if (!(j == userFlightInfo.get(i).length - 1)) {
+                    bw.write(ConstData.DELIMITER_COMMA);
+                }
+            }
+            bw.newLine();
+        }
+        bw.close();
+
+    }
+
+    public static void writeFlightSeatCsv(String flightSeatCsv, List<String[]> seats) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(flightSeatCsv));
         // write down to csv data
-        for (int i = 0; i < nodes.size(); i++) {
-            for (int j = 0; j < nodes.get(i).length; j++) {
-                bw.write(nodes.get(i)[j]);
-                if (!(j == nodes.get(i).length - 1)) {
+        for (int i = 0; i < seats.size(); i++) {
+            for (int j = 0; j < seats.get(i).length; j++) {
+                bw.write(seats.get(i)[j]);
+                if (!(j == seats.get(i).length - 1)) {
                     bw.write(ConstData.DELIMITER_COMMA);
                 }
             }
@@ -74,7 +99,6 @@ public class ManipulateCsv {
 
     public static List<String> readLoginUser(String userEmail, String userPassword)
             throws IOException, NoSuchAlgorithmException {
-
         Path pathUSER_ACCOUNT_FILE = Paths.get(ConstData.USER_ACCOUNT_FILE);
         List<String> linesCsvuserAccount = Files.readAllLines(pathUSER_ACCOUNT_FILE);
         List<String[]> allUserInfo = new ArrayList<>();
@@ -97,6 +121,7 @@ public class ManipulateCsv {
                 break;
             }
         }
+
         return userInfo;
     }
 
@@ -115,23 +140,26 @@ public class ManipulateCsv {
 
     }
 
+    // create a path for searching the flight csv data
+    public static String getPath(String userFlight, String userFlightDate) {
+        String userFlightYear = userFlightDate.substring(0, 4);
+        String userFlightMonth = userFlightDate.substring(4, 6);
+        String userFlightDay = userFlightDate.substring(6, 8);
+        String flightPath = ConstData.PARENT_PATH + userFlightYear + "/" + userFlightMonth + "/" + userFlightDay + "/"
+                + userFlight + ".csv";
+        return flightPath;
+    }
+
     public static void createflightdata() throws IOException {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        String today = sdf.format(calendar.getTime());
-        String year = today.substring(0, 4);
-        String month = today.substring(4, 6);
-        String day = today.toString().substring(6, 8);
-        String hour = today.toString().substring(8, 10);
-
         // add three month
         calendar.add(Calendar.MONTH, 3);
 
-        List<String> linesCsvpathAirlineData = ManipulateCsv.readAllLineCsv(ConstData.PATH_CSV_AIRLINEDATA);
+        List<String> linesCsvpathAirlineData = ManipulateCsv.readAllLinesCsv(ConstData.PATH_CSV_AIRLINEDATA);
 
         for (int i = 0; i < 100; i++) {
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
             String todayAdded = sdf.format(calendar.getTime());
             String yearAdded = todayAdded.substring(0, 4);
             String monthAdded = todayAdded.substring(4, 6);
@@ -167,6 +195,7 @@ public class ManipulateCsv {
                         bw.close();
                     }
                 }
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
             }
         }
     }
